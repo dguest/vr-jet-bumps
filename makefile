@@ -9,6 +9,7 @@ all: $(ALLSRC:.tex=.pdf)
 
 TEXFILES := $(shell find -L . -name '*.tex')
 FIGURES := $(shell find -L figures/ -name '*.pdf')
+FIGURES += figures/spec.pdf
 
 $(FIGURES): code/plot_vr_bump.py
 	@echo "remaking figures"
