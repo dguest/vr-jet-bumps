@@ -1,0 +1,199 @@
+\documentclass[xcolor={table}]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{minted}
+\useoutertheme{infolines}
+
+%%%%% Title and Author %%%%%
+\title{Why are VR Jets Bumpy?}
+\author[dguest@cern.ch]{Dan~Guest}
+\institute[UCI]{UC~Irvine}
+
+\definecolor{UCIBlue}{RGB}{0,100,164}
+\definecolor{UCIYellow}{RGB}{255,210,0}
+\definecolor{UCIYDull}{RGB}{247,235,95}
+\definecolor{UCIBDull}{RGB}{106,162,184}
+\definecolor{UCIBDark}{RGB}{27,61,109}
+\usecolortheme{crane}
+\setbeamercolor*{palette primary}{use=structure,fg=white,bg=UCIBlue}
+\setbeamercolor*{palette secondary}{use=structure,fg=white,bg=UCIYellow}
+\setbeamercolor*{palette tertiary}{use=structure,fg=white,bg=UCIBDark}
+
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{navigation symbols}{}
+\setbeamercovered{transparent}
+\usefonttheme{serif} % default family is serif
+\newcommand{\um}{\mu \mathrm{m}}
+\newcommand{\mm}{\mathrm{mm}}
+\newcommand{\cm}{\mathrm{cm}}
+\newcommand{\gev}{\mathrm{GeV}}
+\newcommand{\mev}{\mathrm{MeV}}
+\newcommand{\tev}{\mathrm{TeV}}
+\newcommand{\T}{\mathrm{T}}
+\newcommand{\pt}{p_{\mathrm{T}}}
+\newcommand{\ptr}{\pt}
+\newcommand{\ptt}{\pt^{\text{s}}}
+  \newcommand{\met}{E_{\mathrm{T}}^{\mathrm{miss}}}
+\newcommand{\supp}[1]{\tilde{#1}}
+\newcommand{\neut}{\supp{\chi}_1^0}
+\newcommand{\cha}{\supp{\chi}_{1}^{\pm}}
+
+\newcommand{\graphic}[2][0.99]{\includegraphics[width=#1\textwidth]{#2}}
+\newcommand{\backupbegin}{
+   \newcounter{framenumberappendix}
+   \setcounter{framenumberappendix}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \addtocounter{framenumberappendix}{-\value{framenumber}}
+   \addtocounter{framenumber}{\value{framenumberappendix}}
+}
+\newcommand{\link}[2]{\underline{\href{#2}{#1}}}
+\newcommand{\arxiv}[1]{\link{arXiv:#1}{http://arxiv.org/abs/#1}}
+\newcommand{\twocol}[3][0.5]{
+  \newdimen\scwid
+  \scwid=\dimexpr\textwidth-#1\textwidth\relax
+  \begin{columns}
+    \begin{column}{#1\textwidth}#2\end{column}
+      \begin{column}{\scwid}#3\end{column}
+  \end{columns}
+}
+\newcommand{\cent}[1]{\begin{center}#1\end{center}}
+
+% -- set graphics path --
+\graphicspath{{figures/}{code/plots/}}
+
+% _________________________________________________________________________
+% main document starts here
+
+\begin{document}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\begin{frame}
+  \frametitle{Preliminary: What is smooth?}
+  \begin{itemize}
+  \item Physics tells us that sometimes underlying distributions are smooth
+  \item ie.
+    \[ \frac{dN}{dx} = \text{something smooth} \]
+    where $x$ is, say, the parton $\pt$
+  \item But we can't measure $x$!
+  \item Instead we measure some $y \equiv r(x)$
+    \begin{itemize}
+    \item Here $r$ takes care of resolution, reconstruction efficiency, etc
+    \item We assume that $r$ is \emph{also} smooth (or we force it to be)
+    \end{itemize}
+  \item And on all our histograms, we write
+    \[ \frac{dN}{dy} = \text{histogram} \]
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Breaking it down}
+  \begin{itemize}
+  \item OK, so let's split up the differential
+    \[ \underbrace{\frac{dN}{d\ptr}}_{\text{measured}} = \underbrace{\frac{dN}{d\ptt}}_{\text{smooth}} \underbrace{\frac{d\ptt}{d\ptr}}_{?} \]
+  \item Here $\ptt$ is smooth, $\ptr$ is reconstructed jets
+    \begin{itemize}
+    \item \textbf{We assume jets ``leak out'' around edges, i.e. not fully contained}
+    \end{itemize}
+  \item So if $\frac{d\ptt}{d\ptr}$ is smooth, we're all set. Is it?
+  \item Let's say some fraction $f$ of the \emph{total} jet energy gets clustered
+    \begin{itemize}
+    \item with pileup we \emph{can} have $f > 1$
+    \item if the jet is not fully contained $f < 1$
+    \item \textbf{In general this depends on the jet radius}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Fun with derivatives}
+  \framesubtitle{I used to do math sometimes, I swear}
+  \begin{itemize}
+  \item With VR jets, radius is a function of the reco energy
+  \item Factorize as $\ptr = f(\ptr) \ptt$
+    \[ \ptr = f(\ptr) \ptt \to \ptt = \frac{\ptr}{f(\ptr)} \to d\ptt = \frac{d\ptr}{f(\ptr)} - \frac{\ptr f'(\ptr) d\ptr}{f(\ptr)^2} \]
+    \[ \frac{d\ptt}{d\ptr} = \frac{1}{f(\ptr)} \left( 1 - f'(\ptr) \frac{\ptr}{f(\ptr)} \right) \]
+  \end{itemize}
+  \begin{block}{Limiting Cases}
+    \begin{itemize}
+    \item $f(\ptr) = c \quad \Rightarrow \quad \frac{dN}{d\ptr} \propto \frac{1}{c}$ (squashed distribution is taller)
+    \item $f(\ptr) = c \cdot \ptr$ (unstable, energy grows without bound)
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{VR Case: Assuming Large ``Leakage''}
+  \begin{itemize}
+  \item In VR jets, assuming flat ``Leaky'' energy distribution
+    \[ f(\ptr) = \frac{R(\ptr)^{2}}{R^{2}_{\text{max}}} = \begin{cases}
+      \frac{ \rho^2 }{(\ptr R_{\text{max}})^2}  &\text{if}\quad \ptr > \frac{\rho}{R_{\text{max}}}\\
+       1 &\text{if}\quad  \ptr <  \frac{\rho}{R_{\text{max}}}
+    \end{cases}
+      \]
+    \[ f'(\ptr) = \begin{cases}
+      \frac{-2 \rho^2 }{(\ptr R_{\text{max}})^3}  &\text{if}\quad \ptr > \frac{\rho}{R_{\text{max}}}\\
+      0 &\text{if}\quad  \ptr <  \frac{\rho}{R_{\text{max}}}
+    \end{cases}
+    \]
+  \item In reality, the jet is mostly contained
+  \item Call this containment $c$
+    \[ f(\ptr) = \overbrace{c}^{\text{contained}} + \overbrace{(1-c) \frac{R(\ptr)^{2}}{R^{2}_{\text{max}}}}^{\text{leaky}} = \begin{cases}
+      \frac{ (1-c) \rho^2 }{(\ptr R_{\text{max}})^2} + c  &
+      \text{if}\quad \ptr > \frac{\rho}{R_{\text{max}}} \\
+      1 & \text{if}\quad  \ptr <  \frac{\rho}{R_{\text{max}}}
+    \end{cases}
+      \]
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Toy Spectrum: $\ptt \exp(\ptt / 30\, \text{GeV})$}
+  \twocol{
+    \begin{center}
+      Rafael's (real)
+      \graphic{trkjet1_pt.png}
+    \end{center}
+  }{
+    \begin{center}
+      My ``Spectrum''
+      \graphic{{spec.pdf}}
+    \end{center}
+  }
+  \begin{itemize}
+  \item I don't know the containment fraction, but:
+    \begin{itemize}
+    \item Just playing with numbers, get something close to $bb + \text{ISR}$
+    \item In $bb + \text{ISR}$, the bump got worse with the ``bug''
+    \item Bug added lots of pileup tracks $\to$ less contained
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Summary}
+  \begin{itemize}
+  \item Main point: $f'$ has a discontinuity at $\ptr = \rho / R_{\text{max}}$
+  \item Given this:
+    \[ \frac{d\ptt}{d\ptr} = \frac{1}{f(\ptr)} \left( 1 - f'(\ptr) \frac{\ptr}{f(\ptr)} \right) \]
+    we expect this discontinuity to put a step in the $\ptr$ spectrum
+  \item The size of the bump depends heavily on the jet containment
+    \begin{itemize}
+    \item Rafael saw a bigger bump when pileup increased
+    \end{itemize}
+  \item \textbf{This might be a feature of the jet algorithm!}
+  \end{itemize}
+  \begin{block}{What do we do about it?}
+    \begin{itemize}
+    \item Should be well-modeled (?), so maybe nothing?
+    \item For functional fits: invent a new function?
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+
+% put slides
+
+\end{document}
