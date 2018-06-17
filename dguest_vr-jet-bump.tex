@@ -70,6 +70,8 @@
   \maketitle
 \end{frame}
 
+\section{Smoothness}
+
 \begin{frame}
   \frametitle{Preliminary: What is smooth?}
   \begin{itemize}
@@ -96,15 +98,16 @@
   \item So if $\frac{d\ptt}{d\ptr}$ is smooth, we're all set. Is it?
   \end{itemize}
 \end{frame}
+
+\section{VR Jets}
+
 \begin{frame}
-  \frametitle{Toy model}
+  \frametitle{Jet Reconstruction: Toy model}
   \begin{itemize}
   \item Let's say some fraction $f$ of $\ptt$ gets clustered
-  \item Factorize as $\ptr = f \cdot \ptt$
-    \begin{itemize}
-    \item with pileup we \emph{can} have $f > 1$
-    \item if the jet is not fully contained $f < 1$
-    \end{itemize}
+    \[\ptr = f \cdot \ptt \]
+  \item With pileup we \emph{can} have $f > 1$
+  \item If the jet is not fully contained $f < 1$
   \item For our purposes, say $0 \leq f \leq 1$
     \begin{itemize}
     \item The overall scales are irrelevant here anyway
@@ -131,7 +134,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{VR Case: ``Leakage'' Related to Area}
+  \frametitle{VR Case: ``Leakage'' is Related to Area}
   \begin{itemize}
   \item In VR jets, assuming flat ``Leaky'' energy distribution
     \[ f(\ptr) = \frac{R(\ptr)^{2}}{R^{2}_{\text{max}}} = \begin{cases}
@@ -154,6 +157,8 @@
       \]
   \end{itemize}
 \end{frame}
+
+\section{Toy Spectra}
 
 \begin{frame}
   \frametitle{Toy Spectrum: $\ptt \exp(\ptt / 30\, \text{GeV})$}
@@ -178,6 +183,8 @@
   \end{itemize}
 \end{frame}
 
+\section{Conclusions}
+
 \begin{frame}
   \frametitle{Summary}
   \begin{itemize}
@@ -189,17 +196,26 @@
     \begin{itemize}
     \item Rafael saw a bigger bump when pileup increased
     \end{itemize}
-  \item \textbf{This might be a feature of the jet algorithm!}
+  \item \textbf{This might be a feature of the jet algorithm}
   \end{itemize}
-  \begin{block}{What do we do about it?}
-    \begin{itemize}
-    \item Maybe nothing: is it well modeled?
-    \item For functional fits: make a smoother $R(\ptr)$
-    \end{itemize}
-  \end{block}
 \end{frame}
 
-
+\begin{frame}
+  \frametitle{Discussion}
+  \begin{enumerate}
+  \item Someone should check my math
+    \begin{enumerate}[a]
+    \item I made a lot of approximations
+    \item In the time this took me to do, could have just run fastjet
+    \end{enumerate}
+  \item This doesn't say there \emph{isn't} a bug in $bb + \text{ISR}$
+  \item What do we need to do about this?
+    \begin{enumerate}[a]
+    \item Maybe nothing: is it well modeled?
+    \item For functional fits: make a smoother $R(\ptr)$
+    \end{enumerate}
+  \end{enumerate}
+\end{frame}
 
 % put slides
 
