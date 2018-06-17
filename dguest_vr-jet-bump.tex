@@ -76,15 +76,11 @@
   \item Physics tells us that sometimes underlying distributions are smooth
   \item ie.
     \[ \frac{dN}{dx} = \text{something smooth} \]
-    where $x$ is, say, the parton $\pt$
+    where $x$ is, say, the smooth parton $\ptt$
   \item But we can't measure $x$!
-  \item Instead we measure some $y \equiv r(x)$
-    \begin{itemize}
-    \item Here $r$ takes care of resolution, reconstruction efficiency, etc
-    \item We assume that $r$ is \emph{also} smooth (or we force it to be)
-    \end{itemize}
+  \item Instead we measure some reconstructed thing, i.e. $\ptr$
   \item And on all our histograms, we write
-    \[ \frac{dN}{dy} = \text{histogram} \]
+    \[ \frac{dN}{d\ptr} = \text{histogram} \]
   \end{itemize}
 \end{frame}
 
@@ -94,26 +90,37 @@
   \item OK, so let's split up the differential
     \[ \underbrace{\frac{dN}{d\ptr}}_{\text{measured}} = \underbrace{\frac{dN}{d\ptt}}_{\text{smooth}} \underbrace{\frac{d\ptt}{d\ptr}}_{?} \]
   \item Here $\ptt$ is smooth, $\ptr$ is reconstructed jets
-    \begin{itemize}
-    \item \textbf{We assume jets ``leak out'' around edges, i.e. not fully contained}
-    \end{itemize}
+    %% \begin{itemize}
+    %% \item It doesn't matter what $\ptt$ is, just that it can't be directly reconstructed
+    %% \end{itemize}
   \item So if $\frac{d\ptt}{d\ptr}$ is smooth, we're all set. Is it?
-  \item Let's say some fraction $f$ of the \emph{total} jet energy gets clustered
-    \begin{itemize}
-    \item with pileup we \emph{can} have $f > 1$
-    \item if the jet is not fully contained $f < 1$
-    \item \textbf{In general this depends on the jet radius}
-    \end{itemize}
   \end{itemize}
 \end{frame}
 \begin{frame}
-  \frametitle{Fun with derivatives}
-  \framesubtitle{I used to do math sometimes, I swear}
+  \frametitle{Toy model}
+  \begin{itemize}
+  \item Let's say some fraction $f$ of $\ptt$ gets clustered
+  \item Factorize as $\ptr = f \cdot \ptt$
+    \begin{itemize}
+    \item with pileup we \emph{can} have $f > 1$
+    \item if the jet is not fully contained $f < 1$
+    \end{itemize}
+  \item For our purposes, say $0 \leq f \leq 1$
+    \begin{itemize}
+    \item The overall scales are irrelevant here anyway
+    \end{itemize}
+  \item \textbf{Pileup and containment depend on the jet radius}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Toy model: VR Jets}
+  \framesubtitle{Fun with derivatives}
   \begin{itemize}
   \item With VR jets, radius is a function of the reco energy
-  \item Factorize as $\ptr = f(\ptr) \ptt$
+  \item Factorize as $\boxed{\ptr = f(\ptr) \ptt}$
     \[ \ptr = f(\ptr) \ptt \to \ptt = \frac{\ptr}{f(\ptr)} \to d\ptt = \frac{d\ptr}{f(\ptr)} - \frac{\ptr f'(\ptr) d\ptr}{f(\ptr)^2} \]
-    \[ \frac{d\ptt}{d\ptr} = \frac{1}{f(\ptr)} \left( 1 - f'(\ptr) \frac{\ptr}{f(\ptr)} \right) \]
+    \[ \boxed{ \frac{d\ptt}{d\ptr} = \frac{1}{f(\ptr)} \left( 1 - f'(\ptr) \frac{\ptr}{f(\ptr)} \right) } \]
   \end{itemize}
   \begin{block}{Limiting Cases}
     \begin{itemize}
@@ -124,7 +131,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{VR Case: Assuming Large ``Leakage''}
+  \frametitle{VR Case: ``Leakage'' Related to Area}
   \begin{itemize}
   \item In VR jets, assuming flat ``Leaky'' energy distribution
     \[ f(\ptr) = \frac{R(\ptr)^{2}}{R^{2}_{\text{max}}} = \begin{cases}
@@ -157,7 +164,7 @@
     \end{center}
   }{
     \begin{center}
-      My ``Spectrum''
+      Toy Spectrum
       \graphic{{spec.pdf}}
     \end{center}
   }
@@ -186,8 +193,8 @@
   \end{itemize}
   \begin{block}{What do we do about it?}
     \begin{itemize}
-    \item Should be well-modeled (?), so maybe nothing?
-    \item For functional fits: invent a new function?
+    \item Maybe nothing: is it well modeled?
+    \item For functional fits: make a smoother $R(\ptr)$
     \end{itemize}
   \end{block}
 \end{frame}
