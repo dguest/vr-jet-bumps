@@ -14,6 +14,7 @@ FIGURES += figures/spec.pdf
 $(FIGURES): code/plot_vr_bump.py
 	@echo "remaking figures"
 	@./code/plot_vr_bump.py
+	@./vr-jet-corner-cases/plot_them.py
 
 %.bbl: %.tex $(TEXFILES) *.bib
 	$(PDFTEX) dguest_vr-jet-bump.tex --draftmode

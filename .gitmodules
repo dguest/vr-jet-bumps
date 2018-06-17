@@ -1,0 +1,3 @@
+[submodule "vr-jet-corner-cases"]
+	path = vr-jet-corner-cases
+	url = git@github.com:dguest/vr-jet-corner-cases.git

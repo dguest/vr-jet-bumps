@@ -117,11 +117,21 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Reminder: VR Jet Radius}
+  \begin{center}
+    \graphic[0.8]{radii-vs-pt.pdf}
+  \begin{itemize}
+  \item VR jet radius has a sharp discontinuity at 75 GeV
+  \end{itemize}
+  \end{center}
+\end{frame}
+
+\begin{frame}
   \frametitle{Toy model: VR Jets}
   \framesubtitle{Fun with derivatives}
   \begin{itemize}
   \item With VR jets, radius is a function of the reco energy
-  \item Factorize as $\boxed{\ptr = f(\ptr) \ptt}$
+  \item More concrete model: $\boxed{\ptr = f(\ptr) \ptt}$
     \[ \ptr = f(\ptr) \ptt \to \ptt = \frac{\ptr}{f(\ptr)} \to d\ptt = \frac{d\ptr}{f(\ptr)} - \frac{\ptr f'(\ptr) d\ptr}{f(\ptr)^2} \]
     \[ \boxed{ \frac{d\ptt}{d\ptr} = \frac{1}{f(\ptr)} \left( 1 - f'(\ptr) \frac{\ptr}{f(\ptr)} \right) } \]
   \end{itemize}
@@ -134,15 +144,15 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{VR Case: ``Leakage'' is Related to Area}
+  \frametitle{VR Case: What is $f$, $f'$?}
   \begin{itemize}
   \item In VR jets, assuming flat ``Leaky'' energy distribution
-    \[ f(\ptr) = \frac{R(\ptr)^{2}}{R^{2}_{\text{max}}} = \begin{cases}
+    \[ f_{\text{leaky}}(\ptr) = \frac{R(\ptr)^{2}}{R^{2}_{\text{max}}} = \begin{cases}
       \frac{ \rho^2 }{(\ptr R_{\text{max}})^2}  &\text{if}\quad \ptr > \frac{\rho}{R_{\text{max}}}\\
        1 &\text{if}\quad  \ptr <  \frac{\rho}{R_{\text{max}}}
     \end{cases}
       \]
-    \[ f'(\ptr) = \begin{cases}
+    \[ f'_{\text{leaky}}(\ptr) = \begin{cases}
       \frac{-2 \rho^2 }{(\ptr R_{\text{max}})^3}  &\text{if}\quad \ptr > \frac{\rho}{R_{\text{max}}}\\
       0 &\text{if}\quad  \ptr <  \frac{\rho}{R_{\text{max}}}
     \end{cases}
